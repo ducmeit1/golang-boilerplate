@@ -1,0 +1,2 @@
+postgres:
+  connectionString: $POSTGRES_CONNECTION_STRING

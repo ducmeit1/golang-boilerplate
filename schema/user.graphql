@@ -1,0 +1,41 @@
+type User {
+    id: ID!
+    name: String!
+    createdAt: Time
+    updatedAt: Time
+}
+
+enum UserOrderField {
+    ID
+    NAME
+    CREATED_AT
+    UPDATED_AT
+}
+
+input UserOrder {
+    direction: OrderDirection!
+    field: UserOrderField
+}
+
+type UserConnection {
+    edges: [UserEdge]
+    pageInfo: PageInfo!
+    totalCount: Int!
+}
+
+type UserEdge {
+    node: User
+    cursor: Cursor!
+}
+
+input NewUserInput {
+    name: String!
+}
+
+type Query {
+    users(after: Cursor, first: Int, before: Cursor, last: Int, orderBy: UserOrder): UserConnection!
+}
+
+type Mutation {
+    newUser(input: NewUserInput!): User!
+}

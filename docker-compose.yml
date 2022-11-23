@@ -1,0 +1,41 @@
+version: "3"
+
+networks:
+  tvf-saleshub:
+    driver: bridge
+
+volumes:
+  postgres_data:
+    driver: local
+
+services:
+  db:
+    image: postgres:13.8
+    restart: always
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - "${PWD}/scripts/postgres-init.sh:/docker-entrypoint-initdb.d/postgres-init.sh"
+    networks:
+      - tvf-saleshub
+
+  backend-api:
+    build:
+      dockerfile: Dockerfile
+    command: ["api"]
+    depends_on:
+      - db
+    restart: always
+    environment:
+      POSTGRES_CONNECTION_STRING: "postgres://backend_user:backend_password@db:5432/backend_api?sslmode=disable"
+    links:
+      - db
+    ports:
+      - '8000:8000'
+    networks:
+      - tvf-saleshub
