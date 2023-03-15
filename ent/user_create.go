@@ -6,8 +6,8 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"golang-boilerplate/ent/user"
 	"time"
-	"tvf-saleshub-backend/ent/user"
 
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"

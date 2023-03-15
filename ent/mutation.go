@@ -6,10 +6,10 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"golang-boilerplate/ent/predicate"
+	"golang-boilerplate/ent/user"
 	"sync"
 	"time"
-	"tvf-saleshub-backend/ent/predicate"
-	"tvf-saleshub-backend/ent/user"
 
 	"github.com/google/uuid"
 

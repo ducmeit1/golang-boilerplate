@@ -1,4 +1,4 @@
-module tvf-saleshub-backend
+module golang-boilerplate
 
 go 1.19
 

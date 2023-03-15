@@ -5,8 +5,8 @@ package ent
 import (
 	"context"
 	"fmt"
-	"tvf-saleshub-backend/ent/predicate"
-	"tvf-saleshub-backend/ent/user"
+	"golang-boilerplate/ent/predicate"
+	"golang-boilerplate/ent/user"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"

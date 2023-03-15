@@ -8,9 +8,9 @@ import (
 	"fmt"
 	"log"
 
-	"tvf-saleshub-backend/ent/migrate"
+	"golang-boilerplate/ent/migrate"
 
-	"tvf-saleshub-backend/ent/user"
+	"golang-boilerplate/ent/user"
 
 	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"

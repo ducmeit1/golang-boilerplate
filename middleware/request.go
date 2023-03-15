@@ -2,7 +2,7 @@ package middleware
 
 import (
 	"context"
-	"tvf-saleshub-backend/internal/util"
+	"golang-boilerplate/internal/util"
 
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"

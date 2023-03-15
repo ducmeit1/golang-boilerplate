@@ -5,7 +5,7 @@ package hook
 import (
 	"context"
 	"fmt"
-	"tvf-saleshub-backend/ent"
+	"golang-boilerplate/ent"
 )
 
 // The UserFunc type is an adapter to allow the use of ordinary

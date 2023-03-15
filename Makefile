@@ -38,3 +38,25 @@ test:
 	@go test ./... -coverprofile=coverage.out
 	@go tool cover -html=coverage.out -o coverage.html
 	@rm -rf coverage.out
+
+updb:
+	migrate -database $(POSTGRES_URL) -path database/migrations up
+
+downdb:
+	migrate -database $(POSTGRES_URL) -path database/migrations down
+
+dropdb:
+	migrate -database $(POSTGRES_URL) -path database/migrations drop
+
+api: build
+	./server api
+
+db:
+	docker compose up -d db
+
+run:
+	docker compose up -d
+
+teardown:
+	docker compose down -v --remove-orphans
+	docker compose rm --force --stop -v

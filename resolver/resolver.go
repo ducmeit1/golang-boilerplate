@@ -3,10 +3,10 @@ package resolver
 import (
 	"context"
 	"fmt"
-	"tvf-saleshub-backend/ent"
-	"tvf-saleshub-backend/internal/util"
+	"golang-boilerplate/ent"
+	"golang-boilerplate/internal/util"
 
-	generated "tvf-saleshub-backend/graphql"
+	generated "golang-boilerplate/graphql"
 
 	"github.com/99designs/gqlgen/graphql"
 	ut "github.com/go-playground/universal-translator"

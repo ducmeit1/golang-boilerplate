@@ -3,9 +3,9 @@
 package ent
 
 import (
+	"golang-boilerplate/ent/schema"
+	"golang-boilerplate/ent/user"
 	"time"
-	"tvf-saleshub-backend/ent/schema"
-	"tvf-saleshub-backend/ent/user"
 
 	"github.com/google/uuid"
 )

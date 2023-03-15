@@ -3,11 +3,11 @@ package main
 import (
 	"errors"
 	"fmt"
+	"golang-boilerplate/cmd/api"
+	"golang-boilerplate/config"
+	"golang-boilerplate/internal/logger"
 	"os"
 	"strings"
-	"tvf-saleshub-backend/cmd/api"
-	"tvf-saleshub-backend/config"
-	"tvf-saleshub-backend/internal/logger"
 
 	"github.com/joho/godotenv"
 	"github.com/spf13/cobra"

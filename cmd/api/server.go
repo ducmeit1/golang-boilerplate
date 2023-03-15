@@ -2,12 +2,12 @@ package api
 
 import (
 	"context"
+	"golang-boilerplate/config"
+	"golang-boilerplate/ent"
+	"golang-boilerplate/middleware"
+	"golang-boilerplate/resolver"
 	"os"
 	"time"
-	"tvf-saleshub-backend/config"
-	"tvf-saleshub-backend/ent"
-	"tvf-saleshub-backend/middleware"
-	"tvf-saleshub-backend/resolver"
 
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"

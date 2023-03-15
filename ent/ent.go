@@ -6,7 +6,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"tvf-saleshub-backend/ent/user"
+	"golang-boilerplate/ent/user"
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"

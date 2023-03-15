@@ -3,8 +3,8 @@
 package user
 
 import (
+	"golang-boilerplate/ent/predicate"
 	"time"
-	"tvf-saleshub-backend/ent/predicate"
 
 	"entgo.io/ent/dialect/sql"
 	"github.com/google/uuid"

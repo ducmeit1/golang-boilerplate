@@ -7,10 +7,10 @@ import (
 	"encoding/base64"
 	"errors"
 	"fmt"
+	"golang-boilerplate/ent/user"
 	"io"
 	"strconv"
 	"strings"
-	"tvf-saleshub-backend/ent/user"
 
 	"entgo.io/ent/dialect/sql"
 	"github.com/99designs/gqlgen/graphql"

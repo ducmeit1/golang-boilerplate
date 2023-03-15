@@ -1,7 +1,7 @@
 version: "3"
 
 networks:
-  tvf-saleshub:
+  golang-boilerplate:
     driver: bridge
 
 volumes:
@@ -20,22 +20,23 @@ services:
       - 5432:5432
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - "${PWD}/scripts/postgres-init.sh:/docker-entrypoint-initdb.d/postgres-init.sh"
+      - "./scripts/postgres-init.sh:/docker-entrypoint-initdb.d/postgres-init.sh"
     networks:
-      - tvf-saleshub
+      - golang-boilerplate
 
-  backend-api:
-    build:
-      dockerfile: Dockerfile
-    command: ["api"]
-    depends_on:
-      - db
-    restart: always
-    environment:
-      POSTGRES_CONNECTION_STRING: "postgres://backend_user:backend_password@db:5432/backend_api?sslmode=disable"
-    links:
-      - db
-    ports:
-      - '8000:8000'
-    networks:
-      - tvf-saleshub
+  # backend-api:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   command: ["api"]
+  #   depends_on:
+  #     - db
+  #   restart: always
+  #   environment:
+  #     POSTGRES_CONNECTION_STRING: "postgres://backend_user:backend_password@db:5432/backend_db?sslmode=disable"
+  #   links:
+  #     - db
+  #   ports:
+  #     - '8000:8000'
+  #   networks:
+  #     - golang-boilerplate

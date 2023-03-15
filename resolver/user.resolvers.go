@@ -5,8 +5,8 @@ package resolver
 
 import (
 	"context"
-	"tvf-saleshub-backend/ent"
-	graphql1 "tvf-saleshub-backend/graphql"
+	"golang-boilerplate/ent"
+	graphql1 "golang-boilerplate/graphql"
 )
 
 // NewUser is the resolver for the newUser field.

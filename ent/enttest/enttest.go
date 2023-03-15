@@ -4,11 +4,11 @@ package enttest
 
 import (
 	"context"
-	"tvf-saleshub-backend/ent"
+	"golang-boilerplate/ent"
 	// required by schema hooks.
-	_ "tvf-saleshub-backend/ent/runtime"
+	_ "golang-boilerplate/ent/runtime"
 
-	"tvf-saleshub-backend/ent/migrate"
+	"golang-boilerplate/ent/migrate"
 
 	"entgo.io/ent/dialect/sql/schema"
 )

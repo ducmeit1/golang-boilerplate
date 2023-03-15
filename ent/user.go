@@ -4,9 +4,9 @@ package ent
 
 import (
 	"fmt"
+	"golang-boilerplate/ent/user"
 	"strings"
 	"time"
-	"tvf-saleshub-backend/ent/user"
 
 	"entgo.io/ent/dialect/sql"
 	"github.com/google/uuid"
