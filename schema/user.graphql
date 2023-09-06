@@ -6,7 +6,6 @@ type User {
 }
 
 enum UserOrderField {
-    ID
     NAME
     CREATED_AT
     UPDATED_AT
@@ -28,14 +27,28 @@ type UserEdge {
     cursor: Cursor!
 }
 
-input NewUserInput {
+input UserFilterInput {
+    name: String
+    pagination: PaginationInput!
+    order: UserOrder
+}
+
+input CreateUserInput {
     name: String!
 }
 
-type Query {
-    users(after: Cursor, first: Int, before: Cursor, last: Int, orderBy: UserOrder): UserConnection!
+type UserOps {
+    create(input: CreateUserInput!): User! @goField(forceResolver: true)
 }
 
-type Mutation {
-    newUser(input: NewUserInput!): User!
+type UserQueries {
+    list(filter: UserFilterInput): UserConnection! @goField(forceResolver: true)
+}
+
+extend type Mutation {
+    user: UserOps! @goField(forceResolver: true)
+}
+
+extend type Query {
+    user: UserQueries! @goField(forceResolver: true)
 }

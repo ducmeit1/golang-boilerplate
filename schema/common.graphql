@@ -16,3 +16,10 @@ type PageInfo {
   startCursor: Cursor
   endCursor: Cursor
 }
+
+input PaginationInput {
+  after: Cursor
+  before: Cursor
+  first: Int
+  last: Int
+}

@@ -5,3 +5,20 @@ package ent
 type NewUserInput struct {
 	Name string `json:"name"`
 }
+
+type PaginationInput struct {
+	After  *Cursor `json:"after"`
+	Before *Cursor `json:"before"`
+	First  *int    `json:"first"`
+	Last   *int    `json:"last"`
+}
+
+type UserFilterInput struct {
+	Name       *string          `json:"name"`
+	Pagination *PaginationInput `json:"pagination"`
+	Order      *UserOrder       `json:"order"`
+}
+
+type UserOps struct {
+	New *User `json:"new"`
+}

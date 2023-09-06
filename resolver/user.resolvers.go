@@ -7,21 +7,32 @@ import (
 	"context"
 	"golang-boilerplate/ent"
 	graphql1 "golang-boilerplate/graphql"
+	"golang-boilerplate/model"
 )
 
-// NewUser is the resolver for the newUser field.
-func (r *mutationResolver) NewUser(ctx context.Context, input ent.NewUserInput) (*ent.User, error) {
-	return r.client.User.Create().SetName(input.Name).Save(ctx)
+// User is the resolver for the user field.
+func (r *mutationResolver) User(ctx context.Context) (*ent.UserOps, error) {
+	return &ent.UserOps{}, nil
 }
 
-// Users is the resolver for the users field.
-func (r *queryResolver) Users(ctx context.Context, after *ent.Cursor, first *int, before *ent.Cursor, last *int, orderBy *ent.UserOrder) (*ent.UserConnection, error) {
-	return r.client.User.Query().Paginate(ctx, after, first, before, last, ent.WithUserOrder(orderBy))
+// User is the resolver for the user field.
+func (r *queryResolver) User(ctx context.Context) (*ent.UserQuery, error) {
+	return &ent.UserQuery{}, nil
 }
 
 // ID is the resolver for the id field.
 func (r *userResolver) ID(ctx context.Context, obj *ent.User) (string, error) {
 	return obj.ID.String(), nil
+}
+
+// Create is the resolver for the create field.
+func (r *userOpsResolver) Create(ctx context.Context, obj *ent.UserOps, input model.CreateUserInput) (*ent.User, error) {
+	return r.service.User().Create(ctx, input)
+}
+
+// List is the resolver for the list field.
+func (r *userQueryResolver) List(ctx context.Context, obj *ent.UserQuery, filter *ent.UserFilterInput) (*ent.UserConnection, error) {
+	return r.service.User().List(ctx, *filter)
 }
 
 // Mutation returns graphql1.MutationResolver implementation.
@@ -33,6 +44,14 @@ func (r *Resolver) Query() graphql1.QueryResolver { return &queryResolver{r} }
 // User returns graphql1.UserResolver implementation.
 func (r *Resolver) User() graphql1.UserResolver { return &userResolver{r} }
 
+// UserOps returns graphql1.UserOpsResolver implementation.
+func (r *Resolver) UserOps() graphql1.UserOpsResolver { return &userOpsResolver{r} }
+
+// UserQuery returns graphql1.UserQueryResolver implementation.
+func (r *Resolver) UserQuery() graphql1.UserQueryResolver { return &userQueryResolver{r} }
+
 type mutationResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
 type userResolver struct{ *Resolver }
+type userOpsResolver struct{ *Resolver }
+type userQueryResolver struct{ *Resolver }

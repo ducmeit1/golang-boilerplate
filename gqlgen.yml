@@ -9,8 +9,8 @@ exec:
 
 # Where should any generated models go?
 model:
-  filename: ent/generated.go
-  package: ent
+  filename: model/generated.go
+  package: model
 
 # Where should the resolver implementations go?
 resolver:
@@ -18,6 +18,9 @@ resolver:
   dir: resolver
   package: resolver
 
+
+skip_validation: true
+skip_mod_tidy: true
 # Optional: turn on use ` + "`" + `gqlgen:"fieldName"` + "`" + ` tags in your models
 # struct_tag: json
 

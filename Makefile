@@ -39,14 +39,14 @@ test:
 	@go tool cover -html=coverage.out -o coverage.html
 	@rm -rf coverage.out
 
-updb:
-	migrate -database $(POSTGRES_URL) -path database/migrations up
+hashdb:
+	docker compose run --rm atlas migrate hash
 
-downdb:
-	migrate -database $(POSTGRES_URL) -path database/migrations down
+migratedbdryrun: hashdb
+	docker compose run --rm atlas migrate apply --url $(POSTGRES_URL) --dry-run
 
-dropdb:
-	migrate -database $(POSTGRES_URL) -path database/migrations drop
+migratedb: hashdb migratedbdryrun
+	docker compose run --rm atlas migrate apply --url $(POSTGRES_URL)
 
 api: build
 	./server api

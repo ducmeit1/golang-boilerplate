@@ -1,0 +1,18 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "GraphQL Server",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "program": "cmd",
+            "cwd": "${workspaceFolder}",
+            "args": [
+                "api",
+            ],
+            "showLog": true,
+            "envFile": ".env",
+        }
+    ]
+}

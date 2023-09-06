@@ -23,6 +23,19 @@ services:
       - "./scripts/postgres-init.sh:/docker-entrypoint-initdb.d/postgres-init.sh"
     networks:
       - golang-boilerplate
+  
+  atlas:
+    image: arigaio/atlas:latest
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: "no"
+    volumes:
+      - "./migrations/:/migrations"
+    links:
+      - "db"
+    networks:
+      - golang-boilerplate
 
   # backend-api:
   #   build:
