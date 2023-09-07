@@ -5,14 +5,14 @@
             "name": "GraphQL Server",
             "type": "go",
             "request": "launch",
-            "mode": "debug",
+            "mode": "auto",
             "program": "cmd",
             "cwd": "${workspaceFolder}",
             "args": [
                 "api",
             ],
             "showLog": true,
-            "envFile": ".env",
+            "envFile": "${workspaceFolder}/.env",
         }
     ]
 }

@@ -18,7 +18,7 @@ ifeq ($(UNAME_S),Darwin)
 endif
 
 ifeq ($(POSTGRES_URL),"")
-	POSTGRES_URL="postgres://backend_user:backend_password@localhost:5432/backend_api?sslmode=disable"
+	POSTGRES_URL="postgres://backend_user:backend_password@db:5432/backend_db?sslmode=disable"
 endif
 
 os:

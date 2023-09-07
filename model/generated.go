@@ -2,6 +2,14 @@
 
 package model
 
+import (
+	"golang-boilerplate/ent"
+)
+
 type CreateUserInput struct {
 	Name string `json:"name"`
+}
+
+type UserQueries struct {
+	List *ent.UserConnection `json:"list"`
 }

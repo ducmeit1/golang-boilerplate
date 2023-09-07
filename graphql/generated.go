@@ -42,7 +42,7 @@ type ResolverRoot interface {
 	Query() QueryResolver
 	User() UserResolver
 	UserOps() UserOpsResolver
-	UserQuery() UserQueryResolver
+	UserQueries() UserQueriesResolver
 }
 
 type DirectiveRoot struct {
@@ -87,7 +87,7 @@ type ComplexityRoot struct {
 		Create func(childComplexity int, input model.CreateUserInput) int
 	}
 
-	UserQuery struct {
+	UserQueries struct {
 		List func(childComplexity int, filter *ent.UserFilterInput) int
 	}
 }
@@ -96,7 +96,7 @@ type MutationResolver interface {
 	User(ctx context.Context) (*ent.UserOps, error)
 }
 type QueryResolver interface {
-	User(ctx context.Context) (*ent.UserQuery, error)
+	User(ctx context.Context) (*model.UserQueries, error)
 }
 type UserResolver interface {
 	ID(ctx context.Context, obj *ent.User) (string, error)
@@ -104,8 +104,8 @@ type UserResolver interface {
 type UserOpsResolver interface {
 	Create(ctx context.Context, obj *ent.UserOps, input model.CreateUserInput) (*ent.User, error)
 }
-type UserQueryResolver interface {
-	List(ctx context.Context, obj *ent.UserQuery, filter *ent.UserFilterInput) (*ent.UserConnection, error)
+type UserQueriesResolver interface {
+	List(ctx context.Context, obj *model.UserQueries, filter *ent.UserFilterInput) (*ent.UserConnection, error)
 }
 
 type executableSchema struct {
@@ -240,17 +240,17 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.UserOps.Create(childComplexity, args["input"].(model.CreateUserInput)), true
 
-	case "UserQuery.list":
-		if e.complexity.UserQuery.List == nil {
+	case "UserQueries.list":
+		if e.complexity.UserQueries.List == nil {
 			break
 		}
 
-		args, err := ec.field_UserQuery_list_args(context.TODO(), rawArgs)
+		args, err := ec.field_UserQueries_list_args(context.TODO(), rawArgs)
 		if err != nil {
 			return 0, false
 		}
 
-		return e.complexity.UserQuery.List(childComplexity, args["filter"].(*ent.UserFilterInput)), true
+		return e.complexity.UserQueries.List(childComplexity, args["filter"].(*ent.UserFilterInput)), true
 
 	}
 	return 0, false
@@ -357,7 +357,6 @@ input PaginationInput {
 }
 
 enum UserOrderField {
-    ID
     NAME
     CREATED_AT
     UPDATED_AT
@@ -381,7 +380,7 @@ type UserEdge {
 
 input UserFilterInput {
     name: String
-    pagination: PaginationInput
+    pagination: PaginationInput!
     order: UserOrder
 }
 
@@ -393,7 +392,7 @@ type UserOps {
     create(input: CreateUserInput!): User! @goField(forceResolver: true)
 }
 
-type UserQuery {
+type UserQueries {
     list(filter: UserFilterInput): UserConnection! @goField(forceResolver: true)
 }
 
@@ -402,7 +401,7 @@ extend type Mutation {
 }
 
 extend type Query {
-    user: UserQuery! @goField(forceResolver: true)
+    user: UserQueries! @goField(forceResolver: true)
 }`, BuiltIn: false},
 }
 var parsedSchema = gqlparser.MustLoadSchema(sources...)
@@ -456,7 +455,7 @@ func (ec *executionContext) field_UserOps_create_args(ctx context.Context, rawAr
 	return args, nil
 }
 
-func (ec *executionContext) field_UserQuery_list_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+func (ec *executionContext) field_UserQueries_list_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
 	var arg0 *ent.UserFilterInput
@@ -753,9 +752,9 @@ func (ec *executionContext) _Query_user(ctx context.Context, field graphql.Colle
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*ent.UserQuery)
+	res := resTmp.(*model.UserQueries)
 	fc.Result = res
-	return ec.marshalNUserQuery2ᚖgolangᚑboilerplateᚋentᚐUserQuery(ctx, field.Selections, res)
+	return ec.marshalNUserQueries2ᚖgolangᚑboilerplateᚋmodelᚐUserQueries(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Query_user(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -767,9 +766,9 @@ func (ec *executionContext) fieldContext_Query_user(ctx context.Context, field g
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
 			case "list":
-				return ec.fieldContext_UserQuery_list(ctx, field)
+				return ec.fieldContext_UserQueries_list(ctx, field)
 			}
-			return nil, fmt.Errorf("no field named %q was found under type UserQuery", field.Name)
+			return nil, fmt.Errorf("no field named %q was found under type UserQueries", field.Name)
 		},
 	}
 	return fc, nil
@@ -1379,8 +1378,8 @@ func (ec *executionContext) fieldContext_UserOps_create(ctx context.Context, fie
 	return fc, nil
 }
 
-func (ec *executionContext) _UserQuery_list(ctx context.Context, field graphql.CollectedField, obj *ent.UserQuery) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_UserQuery_list(ctx, field)
+func (ec *executionContext) _UserQueries_list(ctx context.Context, field graphql.CollectedField, obj *model.UserQueries) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_UserQueries_list(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -1393,7 +1392,7 @@ func (ec *executionContext) _UserQuery_list(ctx context.Context, field graphql.C
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.UserQuery().List(rctx, obj, fc.Args["filter"].(*ent.UserFilterInput))
+		return ec.resolvers.UserQueries().List(rctx, obj, fc.Args["filter"].(*ent.UserFilterInput))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -1410,9 +1409,9 @@ func (ec *executionContext) _UserQuery_list(ctx context.Context, field graphql.C
 	return ec.marshalNUserConnection2ᚖgolangᚑboilerplateᚋentᚐUserConnection(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_UserQuery_list(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_UserQueries_list(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "UserQuery",
+		Object:     "UserQueries",
 		Field:      field,
 		IsMethod:   true,
 		IsResolver: true,
@@ -1435,7 +1434,7 @@ func (ec *executionContext) fieldContext_UserQuery_list(ctx context.Context, fie
 		}
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_UserQuery_list_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+	if fc.Args, err = ec.field_UserQueries_list_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return
 	}
@@ -3321,7 +3320,7 @@ func (ec *executionContext) unmarshalInputUserFilterInput(ctx context.Context, o
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("pagination"))
-			it.Pagination, err = ec.unmarshalOPaginationInput2ᚖgolangᚑboilerplateᚋentᚐPaginationInput(ctx, v)
+			it.Pagination, err = ec.unmarshalNPaginationInput2ᚖgolangᚑboilerplateᚋentᚐPaginationInput(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -3698,16 +3697,16 @@ func (ec *executionContext) _UserOps(ctx context.Context, sel ast.SelectionSet, 
 	return out
 }
 
-var userQueryImplementors = []string{"UserQuery"}
+var userQueriesImplementors = []string{"UserQueries"}
 
-func (ec *executionContext) _UserQuery(ctx context.Context, sel ast.SelectionSet, obj *ent.UserQuery) graphql.Marshaler {
-	fields := graphql.CollectFields(ec.OperationContext, sel, userQueryImplementors)
+func (ec *executionContext) _UserQueries(ctx context.Context, sel ast.SelectionSet, obj *model.UserQueries) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, userQueriesImplementors)
 	out := graphql.NewFieldSet(fields)
 	var invalids uint32
 	for i, field := range fields {
 		switch field.Name {
 		case "__typename":
-			out.Values[i] = graphql.MarshalString("UserQuery")
+			out.Values[i] = graphql.MarshalString("UserQueries")
 		case "list":
 			field := field
 
@@ -3717,7 +3716,7 @@ func (ec *executionContext) _UserQuery(ctx context.Context, sel ast.SelectionSet
 						ec.Error(ctx, ec.Recover(ctx, r))
 					}
 				}()
-				res = ec._UserQuery_list(ctx, field, obj)
+				res = ec._UserQueries_list(ctx, field, obj)
 				if res == graphql.Null {
 					atomic.AddUint32(&invalids, 1)
 				}
@@ -4131,6 +4130,11 @@ func (ec *executionContext) marshalNPageInfo2golangᚑboilerplateᚋentᚐPageIn
 	return ec._PageInfo(ctx, sel, &v)
 }
 
+func (ec *executionContext) unmarshalNPaginationInput2ᚖgolangᚑboilerplateᚋentᚐPaginationInput(ctx context.Context, v interface{}) (*ent.PaginationInput, error) {
+	res, err := ec.unmarshalInputPaginationInput(ctx, v)
+	return &res, graphql.ErrorOnPath(ctx, err)
+}
+
 func (ec *executionContext) unmarshalNString2string(ctx context.Context, v interface{}) (string, error) {
 	res, err := graphql.UnmarshalString(v)
 	return res, graphql.ErrorOnPath(ctx, err)
@@ -4188,18 +4192,18 @@ func (ec *executionContext) marshalNUserOps2ᚖgolangᚑboilerplateᚋentᚐUser
 	return ec._UserOps(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalNUserQuery2golangᚑboilerplateᚋentᚐUserQuery(ctx context.Context, sel ast.SelectionSet, v ent.UserQuery) graphql.Marshaler {
-	return ec._UserQuery(ctx, sel, &v)
+func (ec *executionContext) marshalNUserQueries2golangᚑboilerplateᚋmodelᚐUserQueries(ctx context.Context, sel ast.SelectionSet, v model.UserQueries) graphql.Marshaler {
+	return ec._UserQueries(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNUserQuery2ᚖgolangᚑboilerplateᚋentᚐUserQuery(ctx context.Context, sel ast.SelectionSet, v *ent.UserQuery) graphql.Marshaler {
+func (ec *executionContext) marshalNUserQueries2ᚖgolangᚑboilerplateᚋmodelᚐUserQueries(ctx context.Context, sel ast.SelectionSet, v *model.UserQueries) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
 		}
 		return graphql.Null
 	}
-	return ec._UserQuery(ctx, sel, v)
+	return ec._UserQueries(ctx, sel, v)
 }
 
 func (ec *executionContext) marshalN__Directive2githubᚗcomᚋ99designsᚋgqlgenᚋgraphqlᚋintrospectionᚐDirective(ctx context.Context, sel ast.SelectionSet, v introspection.Directive) graphql.Marshaler {
@@ -4511,14 +4515,6 @@ func (ec *executionContext) marshalOInt2ᚖint(ctx context.Context, sel ast.Sele
 	}
 	res := graphql.MarshalInt(*v)
 	return res
-}
-
-func (ec *executionContext) unmarshalOPaginationInput2ᚖgolangᚑboilerplateᚋentᚐPaginationInput(ctx context.Context, v interface{}) (*ent.PaginationInput, error) {
-	if v == nil {
-		return nil, nil
-	}
-	res, err := ec.unmarshalInputPaginationInput(ctx, v)
-	return &res, graphql.ErrorOnPath(ctx, err)
 }
 
 func (ec *executionContext) unmarshalOString2ᚖstring(ctx context.Context, v interface{}) (*string, error) {
